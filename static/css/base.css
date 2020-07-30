@@ -1,0 +1,54 @@
+div.form {
+	background-color: black;
+	border: 3px solid #dc3545;
+	padding: 20px;
+	border-radius: 1rem !important;
+	margin: auto;
+	margin-top: 50px;
+	color: #F8F8FF;
+}
+
+.form-control {
+	height: calc(1.5em + 2rem + 2px) !important;
+	font-size: 1.1rem !important;
+	border-radius: .5rem !important;
+}
+
+#shortUrl {
+	transition: display 1s ease-in-out;
+}
+
+#shortUrlDiv .resultAction {
+	position: absolute;
+    top: 20%;
+    right: 10px;
+    height: 60%;
+    bottom: 20%;
+}
+
+#shareActions li {
+	display: inline;
+	color: #F8F8FF;
+	font-size: 30px;
+}
+
+#footer {
+	padding:10px;
+	background-color: black;
+	color: #F8F8FF;
+	position:absolute;
+    bottom:0;
+    width:100%;
+	border-top: 3px solid #dc3545;
+
+}
+
+#footer a {
+	/*text-decoration: none;*/
+	color: #F8F8FF;
+}
+
+nav {
+	border-bottom: 3px solid #dc3545;
+
+}
