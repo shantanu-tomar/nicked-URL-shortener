@@ -60,26 +60,29 @@ $(document).on('submit', '#shortenerForm', function(e) {
 
 
 function copyUrl() {
-  /* Get the text field */
-  let urlField = document.getElementById("shortUrl");
-
-  /* Select the text field */
-  urlField.select();
-  urlField.setSelectionRange(0, 99999); /*For mobile devices*/
+  const el = document.createElement('textarea');
+  el.value = document.getElementById('shortUrl').value;
+  document.body.appendChild(el);
+  el.select();
 
   /* Copy the text inside the text field */
   try {
     var successful = document.execCommand('copy');
     var msg = successful ? 'successful' : 'unsuccessful';
     console.log('Fallback: Copying text command was ' + msg);
-  } catch (err) {
+
+    let btn = document.getElementById("copyUrlBtn");
+    btn.innerHTML = 'Copied';
+    btn.className = btn.className.replace('info', 'success');
+  	document.body.removeChild(el);
+  }
+  catch (err) {
     console.error('Fallback: Oops, unable to copy', err);
+  	document.body.removeChild(el);
   }
 
-  let btn = document.getElementById("copyUrlBtn");
-  btn.innerHTML = 'Copied';
-  btn.className = btn.className.replace('info', 'success');
 }
+
 
 function hideShortUrl() {
 	document.getElementById('shortUrlDiv').style.display = 'none';
