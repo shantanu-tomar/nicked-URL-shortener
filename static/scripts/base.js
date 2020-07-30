@@ -1,3 +1,5 @@
+$('#spinner_overlay').hide();
+
 $(window).resize(function() {
 	if (window.innerWidth < 768) {
 		let actions = document.getElementById('shortUrlActions');
@@ -39,7 +41,7 @@ $(document).on('submit', '#shortenerForm', function(e) {
 		},
 
 		success: function(response) {
-			$('#spinner_overlay').show();
+			$('#spinner_overlay').hide();
 			let data = JSON.parse(response, null);
 			if (data != null){
 				$('#shortUrlDiv').css('display', 'block');
@@ -49,7 +51,7 @@ $(document).on('submit', '#shortenerForm', function(e) {
 		},
 
 		error: function(jqXHR) {
-			$('#spinner_overlay').show();
+			$('#spinner_overlay').hide();
 			alert("Status: " + jqXHR.status + " " + jqXHR.statusText
       +"\nPlease try again later.");
 		}
