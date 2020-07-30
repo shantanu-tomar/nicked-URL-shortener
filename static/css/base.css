@@ -1,3 +1,9 @@
+body {
+	max-width: 100vw;
+	width: 100%;
+	overflow-x: hidden;
+}
+
 div.form {
 	background-color: black;
 	border: 3px solid #dc3545;
@@ -32,15 +38,30 @@ div.form {
 	font-size: 30px;
 }
 
-#footer {
-	padding:10px;
-	background-color: black;
-	color: #F8F8FF;
-	position:absolute;
-    bottom:0;
-    width:100%;
-	border-top: 3px solid #dc3545;
+@media (min-width: 769px) {
+	#footer {
+		padding:10px;
+		background-color: black;
+		color: #F8F8FF;
+	    width:100%;
+		border-top: 3px solid #dc3545;
+		bottom: 0px;
+		position: absolute;
+	}
+}
 
+@media (max-width: 768px){
+	#footer {
+		padding:10px;
+		background-color: black;
+		color: #F8F8FF;
+	    width:100%;
+		border-top: 3px solid #dc3545;
+	}
+
+	#homeContainer {
+		min-height: 100vh;
+	}
 }
 
 #footer a {
