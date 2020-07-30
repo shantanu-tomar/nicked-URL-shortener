@@ -27,6 +27,8 @@ $(window).resize(function() {
 
 $(document).on('submit', '#shortenerForm', function(e) {
 	e.preventDefault();
+	$('#spinner_overlay').show();
+ 
 
 	$.ajax({
 		type: 'POST',
@@ -37,6 +39,7 @@ $(document).on('submit', '#shortenerForm', function(e) {
 		},
 
 		success: function(response) {
+			$('#spinner_overlay').show();
 			let data = JSON.parse(response, null);
 			if (data != null){
 				$('#shortUrlDiv').css('display', 'block');
@@ -46,6 +49,7 @@ $(document).on('submit', '#shortenerForm', function(e) {
 		},
 
 		error: function(jqXHR) {
+			$('#spinner_overlay').show();
 			alert("Status: " + jqXHR.status + " " + jqXHR.statusText
       +"\nPlease try again later.");
 		}
