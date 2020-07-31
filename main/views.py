@@ -9,10 +9,24 @@ from django.core.exceptions import ValidationError
 import json
 import string
 import random
+import urllib.request
+from urllib.error import URLError, HTTPError
+import socket
+import requests
+
 
 
 def home(request):
     return render(request, 'main/home.html')
+
+def validation_error():
+    data = {"error": "Please enter a valid link."}
+    response = HttpResponse(json.dumps(data),
+                            content_type="application/json")
+
+    response.status_code = 400
+    return response
+            
 
 
 @csrf_exempt
@@ -20,19 +34,18 @@ def url_shortener(request):
     if request.method == 'POST':
         long_url = request.POST.get("long_url")
 
+
         if "://" not in long_url:
             long_url = 'http://' +long_url
+
         
         try:
             validate = URLValidator(schemes=['http', 'https'])
             validate(long_url)
         except ValidationError:
-            data = {"error": "Please enter a valid link."}
-            response = HttpResponse(json.dumps(data),
-                                    content_type="application/json")
-        
-            response.status_code = 400
-            return response
+            return validation_error()
+
+
         # Checking if a shortened-url already exists 
         # in database for this long url
         record = URL.objects.filter(original_url=long_url)
@@ -42,6 +55,20 @@ def url_shortener(request):
             short_url = f"{domain}/{suffix}"
             
         else:
+            # checking if the URL actually exists or is gibberish
+            try:
+                req = requests.request('HEAD', long_url, timeout=(2, 0.1))
+
+            except requests.ConnectTimeout as e:
+                pass
+
+            except requests.ConnectionError as e:
+                return validation_error()
+
+            except Exception:
+                pass
+
+            # Generating unique code
             N = 6  
             UNIQUE = False
             
