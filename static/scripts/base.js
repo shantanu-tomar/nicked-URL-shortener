@@ -52,8 +52,22 @@ $(document).on('submit', '#shortenerForm', function(e) {
 
 		error: function(jqXHR) {
 			$('#spinner_overlay').hide();
-			alert("Status: " + jqXHR.status + " " + jqXHR.statusText
-      +"\nPlease try again later.");
+
+			if (jqXHR.responseJSON) {
+				let error = jqXHR.responseJSON.error;
+
+   				if (error == "Please enter a valid link.") {
+   					$('#linkError').html(error);
+   					$('#linkError').css('display', '');
+   				}
+   				else {
+   					alert(error);
+   				}
+   			}
+   			else {
+					alert("Status: " + jqXHR.status + " " + jqXHR.statusText
+		      +"\nPlease try again later.");
+			}
 		}
 	});
 });
@@ -64,6 +78,7 @@ function copyUrl() {
   el.value = document.getElementById('shortUrl').value;
   document.body.appendChild(el);
   el.select();
+  el.setSelectionRange(0, 99999); /*For safari browsers*/
 
   /* Copy the text inside the text field */
   try {
@@ -86,6 +101,7 @@ function copyUrl() {
 
 function hideShortUrl() {
 	document.getElementById('shortUrlDiv').style.display = 'none';
+	document.getElementById('linkError').style.display = 'none';
 	let btn = document.getElementById("copyUrlBtn");
     btn.innerHTML = 'Copy';
     btn.className = btn.className.replace('success', 'info');

@@ -4,6 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from .models import URL
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 import json
 import string
 import random
@@ -17,7 +19,20 @@ def home(request):
 def url_shortener(request):
     if request.method == 'POST':
         long_url = request.POST.get("long_url")
+
+        if "://" not in long_url:
+            long_url = 'http://' +long_url
         
+        try:
+            validate = URLValidator(schemes=['http', 'https'])
+            validate(long_url)
+        except ValidationError:
+            data = {"error": "Please enter a valid link."}
+            response = HttpResponse(json.dumps(data),
+                                    content_type="application/json")
+        
+            response.status_code = 400
+            return response
         # Checking if a shortened-url already exists 
         # in database for this long url
         record = URL.objects.filter(original_url=long_url)
