@@ -16,7 +16,7 @@ daphne==2.5.0
 defusedxml==0.6.0
 distlib==0.3.1
 dj-database-url==0.5.0
-Django==3.0.8
+Django==3.0.14
 django-heroku==0.3.1
 django-mathfilters==1.0.0
 django-push-notifications==2.0.0
